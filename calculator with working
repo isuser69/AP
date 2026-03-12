@@ -1,0 +1,99 @@
+XML Layout (activity_main.xml)
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:padding="10dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <EditText
+        android:id="@+id/resultText"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:textSize="30sp"
+        android:gravity="end"
+        android:hint="0"
+        android:inputType="none"/>
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:columnCount="4">
+
+        <Button android:text="7" android:onClick="numberClick"/>
+        <Button android:text="8" android:onClick="numberClick"/>
+        <Button android:text="9" android:onClick="numberClick"/>
+        <Button android:text="/" android:onClick="operatorClick"/>
+
+        <Button android:text="4" android:onClick="numberClick"/>
+        <Button android:text="5" android:onClick="numberClick"/>
+        <Button android:text="6" android:onClick="numberClick"/>
+        <Button android:text="*" android:onClick="operatorClick"/>
+
+        <Button android:text="1" android:onClick="numberClick"/>
+        <Button android:text="2" android:onClick="numberClick"/>
+        <Button android:text="3" android:onClick="numberClick"/>
+        <Button android:text="-" android:onClick="operatorClick"/>
+
+        <Button android:text="0" android:onClick="numberClick"/>
+        <Button android:text="C" android:onClick="clearClick"/>
+        <Button android:text="=" android:onClick="equalClick"/>
+        <Button android:text="+" android:onClick="operatorClick"/>
+
+    </GridLayout>
+
+</LinearLayout>
+2️⃣ Kotlin Code (MainActivity.kt)
+package com.example.calculator
+
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.view.View
+import android.widget.Button
+import android.widget.EditText
+
+class MainActivity : AppCompatActivity() {
+
+    lateinit var resultText: EditText
+    var firstNumber = 0.0
+    var operator = ""
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        resultText = findViewById(R.id.resultText)
+    }
+
+    fun numberClick(view: View) {
+        val button = view as Button
+        resultText.append(button.text)
+    }
+
+    fun operatorClick(view: View) {
+        val button = view as Button
+        firstNumber = resultText.text.toString().toDouble()
+        operator = button.text.toString()
+        resultText.setText("")
+    }
+
+    fun equalClick(view: View) {
+        val secondNumber = resultText.text.toString().toDouble()
+        var result = 0.0
+
+        when (operator) {
+            "+" -> result = firstNumber + secondNumber
+            "-" -> result = firstNumber - secondNumber
+            "*" -> result = firstNumber * secondNumber
+            "/" -> result = firstNumber / secondNumber
+        }
+
+        resultText.setText(result.toString())
+    }
+
+    fun clearClick(view: View) {
+        resultText.setText("")
+        firstNumber = 0.0
+        operator = ""
+    }
+}
