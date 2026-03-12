@@ -1,0 +1,137 @@
+Database Programming with SQLite
+Code:
+Main.kt file:
+package com.example.databaseconnection
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.widget.ArrayAdapter
+import kotlinx.android.synthetic.main.activity_main.*
+class MainActivity : AppCompatActivity() {
+    lateinit var db: MyDb
+    var oldId = ""
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+        db = MyDb(this)
+        button.setOnClickListener {
+            db.increRec(data3.text.toString(),  data1.text.toString(),data2.text.toString())
+            readData()
+            clearFields()
+        }
+
+        button2.setOnClickListener {
+            val newId = data3.text.toString()
+            val fn = data1.text.toString()
+            val ln = data2.text.toString()
+            db.updateRec(oldId, newId, fn, ln)
+            oldId = newId
+            readData()
+            clearFields()
+        }
+
+        lv.setOnItemClickListener { AdapterView, view, i, l ->
+            val item = lv.getItemAtPosition(i).toString()
+            val parts = item.split(" ")
+            oldId = parts[0]
+            data3.setText(parts[0])
+            data1.setText(parts[1])
+            data2.setText(parts[2])
+        }
+
+        lv.setOnItemLongClickListener {AdapterView, view, i, l ->
+            val item = lv.getItemAtPosition(i).toString()
+            val id = item.split(" ")[0]
+            db.deleteRec(id)
+            readData()
+            true
+        }
+        readData()
+    }
+
+    fun readData() {
+        val tdata = db.readData()
+        lv.adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, tdata)
+    }
+
+    fun clearFields() {
+        data3.setText("")
+        data1.setText("")
+        data2.setText("")
+    }
+}
+
+MyDB.kt file :
+package com.example.databaseconnection
+import android.content.ContentValues
+import android.content.Context
+import android.database.sqlite.SQLiteDatabase
+import android.database.sqlite.SQLiteOpenHelper
+import android.widget.Toast
+class MyDb(var ctx: Context) : SQLiteOpenHelper(ctx, "TYIT2026", null, 2) {
+   
+ override fun onCreate(db: SQLiteDatabase?) {
+        db?.execSQL(
+            "create table Student(" +
+                    "id text primary key, " +
+                    "fname text, " +
+                    "lname text)"
+        )
+    }
+    override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
+        db?.execSQL("DROP TABLE IF EXISTS Student")
+        onCreate(db)
+    }
+
+    fun increRec(id: String, fn: String, ln: String) {
+        val db = this.writableDatabase
+        val cv = ContentValues()
+        cv.put("id", id)
+        cv.put("fname", fn)
+        cv.put("lname", ln)
+        val res = db.insert("Student", null, cv)
+        if (res > 0)
+            Toast.makeText(ctx, "Record Inserted", Toast.LENGTH_LONG).show()
+        else
+            Toast.makeText(ctx, "ID Already Exists", Toast.LENGTH_LONG).show()
+    }
+
+    fun readData(): ArrayList<String> {
+        val db = this.readableDatabase
+        val data = ArrayList<String>()
+        val cursor = db.rawQuery("SELECT * FROM Student", null)
+        if (cursor.moveToFirst()) {
+            do {
+                data.add(cursor.getString(0) + " " +
+                        cursor.getString(1) + " " +
+                        cursor.getString(2))
+            } while (cursor.moveToNext())
+        }
+        cursor.close()
+        return data
+    }
+
+    fun deleteRec(id: String) {
+        val db = this.writableDatabase
+        val res = db.delete("Student", "id=?", arrayOf(id))
+        if (res > 0)
+            Toast.makeText(ctx, "Record Deleted", Toast.LENGTH_LONG).show()
+        else
+            Toast.makeText(ctx, "Delete Failed", Toast.LENGTH_LONG).show()
+    }
+
+    fun updateRec(oldId: String, newId: String, fn: String, ln: String) {
+        val db = this.writableDatabase
+        val cv = ContentValues()
+        cv.put("id", newId)
+        cv.put("fname", fn)
+        cv.put("lname", ln)
+        val res = db.update("Student", cv, "id=?", arrayOf(oldId))
+        if (res > 0)
+            Toast.makeText(ctx, "Record Updated", Toast.LENGTH_LONG).show()
+        else
+            Toast.makeText(ctx, "Update Failed", Toast.LENGTH_LONG).show()
+    }
+}
+
+

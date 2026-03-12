@@ -1,0 +1,41 @@
+3. Broadcast receivers
+Code:
+package com.tyit.broadcast
+
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.widget.Toast
+
+class MainActivity : AppCompatActivity() {
+    var br =object :BroadcastReceiver(){
+        override fun onReceive(p0: Context?, p1: Intent?) 
+        {
+            if (p1?.action==Intent.ACTION_AIRPLANE_MODE_CHANGED) {
+                var flag =p1.getBooleanExtra("state",false)
+                if (flag){
+                    Toast.makeText(p0, "Airplane Mode ON", Toast.LENGTH_LONG).show()
+                }
+                else{
+                    Toast.makeText(p0, "Airplane Mode OFF", Toast.LENGTH_LONG).show()
+                }
+            }
+        }
+    }
+    override fun onStart() {
+        super.onStart()
+        registerReceiver(br, IntentFilter(Intent.ACTION_AIRPLANE_MODE_CHANGED))
+    }
+    override fun onStop() {
+        super.onStop()
+        unregisterReceiver(br)
+    }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+    }
+}
+

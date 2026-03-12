@@ -1,0 +1,141 @@
+1.AppBar
+Code:
+.kt file code
+package com.example.my_fragment
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
+import android.widget.Toast
+import kotlinx.android.synthetic.main.activity_main.*
+class MainActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+        setSupportActionBar(mytoolbar)
+    }
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        super.onCreateOptionsMenu(menu)
+        menuInflater.inflate(R.menu.mymenu,menu)
+        return true
+    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if(item.itemId==R.id.one){
+            Toast.makeText(this,"Folder is clicked",Toast.LENGTH_LONG).show()
+        }
+        if(item.itemId==R.id.two){
+            Toast.makeText(this,"Search is clicked",Toast.LENGTH_LONG).show()
+        }
+        if(item.itemId==R.id.s1){
+            Toast.makeText(this,"This is toast",Toast.LENGTH_LONG).show()
+        }
+        return super.onOptionsItemSelected(item)
+    }
+}
+.xml file code
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/mytoolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        tools:ignore="MissingConstraints"
+        android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar"
+        android:background="@color/teal_700"
+        app:titleTextColor="@color/white"
+        android:elevation="4dp"/>
+</androidx.constraintlayout.widget.ConstraintLayout>
+New .xml file code
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/one" android:title="folder" android:icon="@drawable/ic_baseline_folder_24" app:showAsAction="always"/>
+    <item android:id="@+id/two" android:title="search" android:icon="@drawable/ic_baseline_search_24" app:showAsAction="always"/>
+    <item android:id="@+id/main" android:title="Main Menu">
+        <menu>
+            <item android:id="@+id/s1" android:title="Toast"/>
+            <item android:id="@+id/s2" android:title="Exit"/>
+        </menu>
+    </item>
+</menu>
+
+
+
+2.Fragments
+Code:
+package srm.it.fragmentdemo
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import kotlinx.android.synthetic.main.activity_main.*
+class MainActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        var state=0
+        button.setOnClickListener {
+            if(state==0)   {
+supportFragmentManager.beginTransaction().replace(R.id.fragmentContainerView,first()).commit()
+                state=1
+            }
+            else
+{  supportFragmentManager.beginTransaction().replace(R.id.fragmentContainerView,second()).commit()
+                state=0
+            } 
+}  } }
+
+
+
+3. UI Components
+Code:
+package sy.it.ui_component
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.widget.RadioButton
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
+import kotlinx.android.synthetic.main.activity_main.*
+
+class MainActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        button.setOnClickListener {
+            var name=box1.text.toString()
+            var email= box2.text.toString()
+            var dob=box3.text.toString()
+            var pass=box4.text.toString()
+            var compass=box5.text.toString()
+
+            if(pass!=compass){
+                Toast.makeText(this,"Password does not match",Toast.LENGTH_SHORT).show()
+ }
+
+            var gen=radioGroup.checkedRadioButtonId
+            var gs=if (gen == -1) {
+                Toast.makeText(this, "Select gender", Toast.LENGTH_SHORT).show()
+            }
+            else {
+                findViewById<RadioButton>(gen).text.toString()
+            }
+
+            var term=if(checkBox.isChecked){
+                checkBox.text.toString()
+            }else{
+                Toast.makeText(this, "Please accept our terms and conditions", Toast.LENGTH_SHORT).show()
+            }
+            textView7.text = """
+                $name
+                $email
+                $dob
+                $pass
+                $gs
+                $term
+                """.trimIndent() }}}
+

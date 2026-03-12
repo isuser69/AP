@@ -1,0 +1,181 @@
+2)Gridview with linear layout
+.xml
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/res"
+        android:textSize="50dp"
+        android:gravity="end"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:columnCount="4">
+        <Button
+            android:id="@+id/one"
+            android:text="1"
+           android:textSize="20dp"
+           android:layout_margin="2dp" />
+        <Button
+            android:id="@+id/two"
+            android:text="2"
+            android:textSize="20dp"
+            android:layout_margin="2dp" />
+        <Button
+            android:id="@+id/three"
+            android:text="3"
+            android:textSize="20dp"
+            android:layout_margin="2dp" />
+        <Button
+            android:id="@+id/four"
+            android:text="4"
+            android:textSize="20dp"
+            android:layout_margin="2dp" />
+        <Button
+            android:id="@+id/five"
+            android:text="5"
+            android:textSize="20dp"
+            android:layout_margin="2dp" />
+        <Button
+            android:id="@+id/six"
+            android:text="6"
+            android:textSize="20dp"
+            android:layout_margin="2dp" />
+        <Button
+            android:id="@+id/seven"
+            android:text="7"
+            android:textSize="20dp"
+            android:layout_margin="2dp" />
+        <Button
+            android:id="@+id/eight"
+            android:text="8"
+            android:textSize="20dp"
+            android:layout_margin="2dp" />
+        <Button
+            android:id="@+id/nine"
+            android:text="9"
+            android:textSize="20dp"
+            android:layout_margin="2dp" />
+        <Button
+            android:id="@+id/zero"
+            android:text="0"
+            android:textSize="20dp"
+            android:layout_margin="2dp" />
+        <Button
+            android:id="@+id/add"
+            android:text="+"
+            android:textSize="20dp"
+            android:layout_margin="2dp" />
+        <Button
+            android:id="@+id/eq"
+            android:text="="
+            android:textSize="20dp"
+            android:layout_margin="2dp"
+            android:layout_rowSpan="2"
+            android:layout_gravity="fill_vertical"/>
+        <Button
+            android:id="@+id/mul"
+            android:text="*"
+            android:textSize="20dp"
+            android:layout_margin="2dp" />
+        <Button
+            android:id="@+id/div"
+            android:text="/"
+            android:textSize="20dp"
+            android:layout_margin="2dp" />
+        <Button
+            android:id="@+id/sub"
+            android:text="-"
+            android:textSize="20dp"
+            android:layout_margin="2dp" />
+    </GridLayout>
+</LinearLayout>
+.kt
+package com.example.gridview
+
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import kotlinx.android.synthetic.main.activity_main.*
+
+class MainActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+        var lhs=0
+        var rhs=0
+        var op=""
+        one.setOnClickListener {
+            res.append(one.text.toString())
+        }
+        two.setOnClickListener {
+            res.append(two.text.toString())
+        }
+        three.setOnClickListener {
+            res.append(three.text.toString())
+        }
+        four.setOnClickListener {
+            res.append(four.text.toString())
+        }
+        five.setOnClickListener {
+            res.append(five.text.toString())
+        }
+        six.setOnClickListener {
+            res.append(six.text.toString())
+        }
+        seven.setOnClickListener {
+            res.append(seven.text.toString())
+        }
+        eight.setOnClickListener {
+            res.append(eight.text.toString())
+        }
+        zero.setOnClickListener {
+            res.append(two.text.toString())
+        }
+        add.setOnClickListener {
+            lhs=res.text.toString().toInt()
+            op=add.text.toString()
+            res.text=""
+        }
+        sub.setOnClickListener {
+            lhs=res.text.toString().toInt()
+            op=sub.text.toString()
+            res.text=""
+        }
+        mul.setOnClickListener {
+            lhs=res.text.toString().toInt()
+            op=mul.text.toString()
+            res.text=""
+        }
+        div.setOnClickListener {
+            lhs=res.text.toString().toInt()
+            op=div.text.toString()
+            res.text=""
+        }
+        eq.setOnClickListener {
+            rhs=res.text.toString().toInt()
+            res.text=""
+            when(op){
+                "+"->res.text=(lhs + rhs).toString()
+                "-"->res.text=(lhs - rhs).toString()
+                "*"->res.text=(lhs * rhs).toString()
+                "/"->res.text=(lhs / rhs).toString()
+            }
+        }
+
+    }
+}

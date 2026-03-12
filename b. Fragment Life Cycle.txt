@@ -1,0 +1,51 @@
+b. Fragment Life Cycle
+Code: 
+package example.it.prac2
+import android.content.Context
+import android.os.Bundle
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.Toast
+class fragment1 : Fragment() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        Toast.makeText(context,"onCreate",Toast.LENGTH_LONG).show()
+        super.onCreate(savedInstanceState)
+    }
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+                return inflater.inflate(R.layout.fragment_fragment1, container, false)
+    }
+    override fun onPause() {
+        Toast.makeText(context,"onPause",Toast.LENGTH_LONG).show()
+        super.onPause()
+    }
+    override fun onStart() {
+        Toast.makeText(context,"onStar",Toast.LENGTH_LONG).show()
+        super.onStart()
+    }
+    override fun onResume() {
+        Toast.makeText(context,"onResume",Toast.LENGTH_LONG).show()
+        super.onResume()
+    }
+    override fun onStop() {
+        Toast.makeText(context,"onStop",Toast.LENGTH_LONG).show()
+        super.onStop()
+    }
+    override fun onDestroy() {
+        Toast.makeText(context,"onDestory",Toast.LENGTH_LONG).show()
+        super.onDestroy()
+    }
+    override fun onAttach(context: Context) {
+        Toast.makeText(context,"onAttach",Toast.LENGTH_LONG).show()
+        super.onAttach(context)
+    }
+    override fun onDetach() {
+        Toast.makeText(context,"onDetach",Toast.LENGTH_LONG).show()
+        super.onDetach()
+    }
+
+}

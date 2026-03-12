@@ -1,0 +1,44 @@
+A.	Activity Life Cycle:
+Code: 
+package example.it.prac2
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.widget.Toast
+class MainActivity : AppCompatActivity() 
+  {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        Toast.makeText(this,"Oncreate",Toast.LENGTH_LONG).show()
+        setContentView(R.layout.activity_main)
+    }
+    override fun onPause() 
+    {
+        Toast.makeText(this,"OnPause",Toast.LENGTH_LONG).show()
+        super.onPause()
+    }
+    override fun onStart() 
+    {
+        Toast.makeText(this,"OnStart",Toast.LENGTH_LONG).show()
+        super.onStart()
+    }
+    override fun onRestart() 
+    {
+        Toast.makeText(this,"OnRestart",Toast.LENGTH_LONG).show()
+        super.onRestart()
+    }
+    override fun onStop() 
+    {
+        Toast.makeText(this,"OnStop",Toast.LENGTH_LONG).show()
+        super.onStop()
+    }
+    override fun onDestroy() 
+    {
+        Toast.makeText(this,"OnDestroy",Toast.LENGTH_LONG).show()
+        super.onDestroy()
+    }
+    override fun onResume() 
+    {
+        Toast.makeText(this,"OnResume",Toast.LENGTH_LONG).show()
+        super.onResume()
+    }
+}

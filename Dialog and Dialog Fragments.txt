@@ -1,0 +1,122 @@
+2)Dialog
+Code:
+package srm.it.dialog
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
+import kotlinx.android.synthetic.main.activity_main.
+class MainActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+        button.setOnClickListener {
+            var mydialog=AlertDialog.Builder(this)
+            mydialog.setTitle("Hello")
+            mydialog.setMessage("do you want to exit ?...")
+            mydialog.setPositiveButton("Yes"){dialog,which->
+                Toast.makeText(this,"you click yes",Toast.LENGTH_LONG).show()
+            }
+            mydialog.setNegativeButton("No"){dialog,which->
+                Toast.makeText(this,"you click No",Toast.LENGTH_LONG).show()
+            }
+            mydialog.setNeutralButton("cancel"){dialog,which->
+                Toast.makeText(this,"you click No",Toast.LENGTH_LONG).show()
+            }
+            mydialog.show()
+        }
+    }
+    override fun onBackPressed() {
+        var mydialog=AlertDialog.Builder(this)
+        mydialog.setTitle("Hello")
+        mydialog.setMessage("do you want to exit ?...")
+        mydialog.setPositiveButton("Yes"){dialog,which->
+            Toast.makeText(this,"you click yes",Toast.LENGTH_LONG).show()
+        }
+        mydialog.setNegativeButton("No"){dialog,which->
+            Toast.makeText(this,"you click No",Toast.LENGTH_LONG).show()
+        }
+        mydialog.setNeutralButton("cancel"){dialog,which->
+            Toast.makeText(this,"you click No",Toast.LENGTH_LONG).show()
+        }
+        mydialog.show()
+    }
+}
+
+
+3)Dialog fragments
+Code:
+.kt file code:
+package com.example.dialogfragment
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import kotlinx.android.synthetic.main.activity_main.*
+class MainActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+        button.setOnClickListener {
+            var obj=Myclass()
+            obj.show(supportFragmentManager,"tyit")
+        }
+    }
+}
+.xml file code:
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Click"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
+second .kt file code:
+package com.example.dialogfragment
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.Toast
+import androidx.fragment.app.DialogFragment
+import kotlinx.android.synthetic.main.mylayout.view.*
+class Myclass:DialogFragment() {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        var s=inflater.inflate(R.layout.mylayout,container)
+        s.btn.setOnClickListener {
+            var d=s.text.text.toString()
+            Toast.makeText(context,"Welcome",Toast.LENGTH_LONG).show()
+        }
+        return s
+    }
+}
+second .xml file code:
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/text"
+        android:hint="@string/app_name"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/text"
+        android:id="@+id/btn"
+        android:text="submit"/>
+</RelativeLayout>
+

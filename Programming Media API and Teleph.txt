@@ -1,0 +1,75 @@
+A. Programming Media API and Telephone API
+1. Media API
+Code:
+package com.example.mediaapi
+
+import android.net.Uri
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.widget.MediaController
+import kotlinx.android.synthetic.main.activity_main.*
+
+class MainActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        var path="android.resource://com.example.mediaapi/"+R.raw.the_fight
+        videoView.setVideoURI(Uri.parse(path))
+        videoView.setMediaController(MediaController(this))
+        videoView.start()
+    }
+}
+
+
+
+2. Telephone API
+Code:
+package com.example.callingapi
+import android.Manifest
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
+import android.os.Bundle
+import android.provider.ContactsContract
+import android.widget.ArrayAdapter
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import kotlinx.android.synthetic.main.activity_main.*
+class MainActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+        ActivityCompat.requestPermissions(this,  arrayOf(Manifest.permission.READ_CONTACTS), 1)
+
+        lv.setOnItemClickListener { adapterView, view, i, l ->
+            val num = lv.getItemAtPosition(i).toString()
+            startActivity(Intent(Intent.ACTION_DIAL, Uri.parse("tel:$num")))
+        }
+    }
+    private fun showContacts() {
+        var list = ArrayList<String>()
+        var c = contentResolver.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+            null, null, null, null)
+        while (c != null && c.moveToNext()) {
+            val name = c.getString(       c.getColumnIndexOrThrow(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME))
+            val number = c.getString(
+          c.getColumnIndexOrThrow(ContactsContract.CommonDataKinds.Phone.NUMBER))
+            list.add(name + "\n" + number)
+        }
+        lv.adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, list)
+    }
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray ) {
+        if (requestCode == 1 && grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)
+        {
+            showContacts()
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+    }
+    }
+}
+
+
+

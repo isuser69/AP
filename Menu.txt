@@ -1,0 +1,132 @@
+1.Menu
+Code:
+.kt file code:
+package srm.it.menu
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
+import android.widget.PopupMenu
+import android.widget.Toast
+import kotlinx.android.synthetic.main.activity_main.*
+class MainActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)    }
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.resource_file,menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId==R.id.one)
+        {
+            Toast.makeText(this,"this is profile",Toast.LENGTH_LONG).show()
+        }
+        if (item.itemId==R.id.two)
+        {
+            System.exit(0)
+        }
+        if (item.itemId==R.id.three)
+        {
+            Toast.makeText(this,"this is home",Toast.LENGTH_LONG).show()
+        }
+        if (item.itemId==R.id.four)
+        {
+            Toast.makeText(this,"this is About us",Toast.LENGTH_LONG).show()
+        }
+        if (item.itemId==R.id.five)
+        {
+            Toast.makeText(this,"this is contact us",Toast.LENGTH_LONG).show()
+        }
+        return super.onOptionsItemSelected(item)
+    }
+}
+Xml file code:
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:title="main_menu">
+        <menu>
+    <item android:id="@+id/one" android:title="Profile"></item>
+    <item android:id="@+id/two" android:title="logout"></item>
+        </menu>
+    </item>
+    <item android:id="@+id/three" android:title="Home" app:showAsAction="always"></item>
+    <item android:id="@+id/four" android:title="About Us" app:showAsAction="always"></item>
+    <item android:id="@+id/five" android:title="Contact Us" app:showAsAction="always"></item>
+</menu>
+
+
+
+2) POP UP Menu
+Code:
+package srm.it.menu
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
+import android.widget.PopupMenu
+import android.widget.Toast
+import kotlinx.android.synthetic.main.activity_main.*
+class MainActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+        button.setOnClickListener {
+            var pm:PopupMenu= PopupMenu(this,button)
+            pm.menuInflater.inflate(R.menu.resource_file,pm.menu)
+            pm.setOnMenuItemClickListener { it
+                if (it.itemId==R.id.one)
+                {
+                    Toast.makeText(this,"this is profile",Toast.LENGTH_LONG).show()
+                }
+                if (it.itemId==R.id.two)
+                {
+                    System.exit(0)
+                }
+                if (it.itemId==R.id.three)
+                {
+                    Toast.makeText(this,"this is home",Toast.LENGTH_LONG).show()
+                }
+                if (it.itemId==R.id.four)
+                {
+                    Toast.makeText(this,"this is About us",Toast.LENGTH_LONG).show()
+                }
+                if (it.itemId==R.id.five)
+                {
+                    Toast.makeText(this,"this is contact us",Toast.LENGTH_LONG).show()
+                }
+                true
+            }
+            pm.show()
+        }
+    }
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.resource_file,menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId==R.id.one)
+        {
+            Toast.makeText(this,"this is profile",Toast.LENGTH_LONG).show()
+        }
+        if (item.itemId==R.id.two)
+        {
+            System.exit(0)
+        }
+        if (item.itemId==R.id.three)
+        {
+            Toast.makeText(this,"this is home",Toast.LENGTH_LONG).show()
+        }
+        if (item.itemId==R.id.four)
+        {
+            Toast.makeText(this,"this is About us",Toast.LENGTH_LONG).show()
+        }
+        if (item.itemId==R.id.five)
+        {
+            Toast.makeText(this,"this is contact us",Toast.LENGTH_LONG).show()
+        }
+        return super.onOptionsItemSelected(item)
+    }
+}
+
