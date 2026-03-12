@@ -1,0 +1,7 @@
+MainActivity.kt
+val intent = Intent(this, SecondActivity::class.java)
+intent.putExtra("name","Tushar")
+startActivity(intent)
+SecondActivity.kt
+val name = intent.getStringExtra("name")
+textView.text = name
