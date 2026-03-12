@@ -1,7 +1,98 @@
+activity_main.xml
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:padding="20dp"
+    android:gravity="center"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <EditText
+        android:id="@+id/editTextName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Name"/>
+
+    <Button
+        android:id="@+id/btnSend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Send Data"/>
+
+</LinearLayout>
+ First Activity Kotlin Code
+
 MainActivity.kt
-val intent = Intent(this, SecondActivity::class.java)
-intent.putExtra("name","Tushar")
-startActivity(intent)
+
+package com.example.intentdata
+
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.widget.*
+import android.content.Intent
+
+class MainActivity : AppCompatActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        val editText = findViewById<EditText>(R.id.editTextName)
+        val button = findViewById<Button>(R.id.btnSend)
+
+        button.setOnClickListener {
+
+            val name = editText.text.toString()
+
+            val intent = Intent(this, SecondActivity::class.java)
+            intent.putExtra("username", name)
+
+            startActivity(intent)
+        }
+    }
+}
+ Second Activity Layout
+
+activity_second.xml
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/textViewResult"
+        android:textSize="24sp"
+        android:text="Received Data"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>
+ Second Activity Kotlin Code
+
 SecondActivity.kt
-val name = intent.getStringExtra("name")
-textView.text = name
+
+package com.example.intentdata
+
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.widget.TextView
+
+class SecondActivity : AppCompatActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_second)
+
+        val textView = findViewById<TextView>(R.id.textViewResult)
+
+        val name = intent.getStringExtra("username")
+
+        textView.text = "Welcome $name"
+    }
+}
+ AndroidManifest.xml (Add Second Activity)
+<activity android:name=".SecondActivity"></activity>
