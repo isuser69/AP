@@ -1,0 +1,51 @@
+activity_main.xml
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:padding="20dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <EditText
+        android:id="@+id/username"
+        android:hint="Username"/>
+
+    <EditText
+        android:id="@+id/password"
+        android:hint="Password"
+        android:inputType="textPassword"/>
+
+    <Button
+        android:text="Login"
+        android:onClick="login"/>
+
+</LinearLayout>
+MainActivity.kt
+package com.example.loginapp
+
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.view.View
+import android.widget.*
+import android.widget.Toast
+
+class MainActivity : AppCompatActivity() {
+
+    lateinit var user: EditText
+    lateinit var pass: EditText
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        user = findViewById(R.id.username)
+        pass = findViewById(R.id.password)
+    }
+
+    fun login(view: View){
+        if(user.text.toString().isEmpty() || pass.text.toString().isEmpty()){
+            Toast.makeText(this,"Fields cannot be empty",Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(this,"Login Successful",Toast.LENGTH_SHORT).show()
+        }
+    }
+}
